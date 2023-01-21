@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override');
+var session = require('express-session');
+var flash = require('connect-flash');
 
 var dashboardRouter = require('./app/dashboard/router');
 var categoryRouter = require('./app/category/router');
@@ -16,12 +18,19 @@ app.set('view engine', 'ejs');
 
 // override with the X-HTTP-Method-Override header in the request
 app.use(methodOverride('_method'));
+app.use(flash());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/adminlte', express.static(path.join(__dirname, '/node_modules/admin-lte/')));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {  }
+}))
 
 app.use('/', dashboardRouter);
 app.use('/category', categoryRouter);
