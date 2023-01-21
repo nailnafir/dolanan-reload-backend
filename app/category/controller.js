@@ -51,5 +51,16 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+    actionDelete: async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            let category = await CategoryModel.findOneAndRemove({ _id: id });
+
+            res.redirect('/category');
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
