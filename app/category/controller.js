@@ -3,7 +3,9 @@ const CategoryModel = require('./model');
 module.exports = {
     index: async (req, res) => {
         try {
-            res.render('admin/category/view_category');
+            let category = await CategoryModel.find();
+
+            res.render('admin/category/view_category', { category });
         } catch (error) {
             console.log(error);
         }
