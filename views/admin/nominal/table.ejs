@@ -1,0 +1,37 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th class="col-1">Nomor</th>
+      <th class="col-3">Nama Koin</th>
+      <th class="col-2">Jumlah Koin</th>
+      <th class="col-3">Harga</th>
+      <th class="col-3">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <% for(let i = 0; i < nominal.length; i++) { %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= nominal[i].coinName %></td>
+      <td><%= nominal[i].coinQuantity %></td>
+      <td><%= new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(nominal[i].price); %></td>
+      <td>
+        <form action="/nominal/delete/<%= nominal[i]._id %>?_method=DELETE" method="POST">
+          <a
+            href="/nominal/edit/<%= nominal[i]._id %>"
+            class="btn btn-warning"
+          >
+            <i class="fas fa-pencil-alt mr-2"></i>
+            Ubah
+          </a>
+          <button class="btn btn-danger">
+            <i class="fas fa-trash mr-2"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
