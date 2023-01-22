@@ -72,20 +72,20 @@ module.exports = {
             res.redirect('nominal');
         }
     },
-    // actionDelete: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
+    actionDelete: async (req, res) => {
+        try {
+            const { id } = req.params;
 
-    //         await CategoryModel.findOneAndRemove({ _id: id });
+            await NominalModel.findOneAndRemove({ _id: id });
 
-    //         req.flash('alertMessage', "Berhasil hapus data");
-    //         req.flash('alertStatus', "success");
+            req.flash('alertMessage', "Berhasil hapus data");
+            req.flash('alertStatus', "success");
 
-    //         res.redirect('/category');
-    //     } catch (error) {
-    //         req.flash('alertMessage', `${error.message}`);
-    //         req.flash('alertStatus', 'danger');
-    //         res.redirect('category');
-    //     }
-    // }
+            res.redirect('/nominal');
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`);
+            req.flash('alertStatus', 'danger');
+            res.redirect('nominal');
+        }
+    }
 }
