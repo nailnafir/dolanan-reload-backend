@@ -45,36 +45,56 @@ module.exports = {
             res.redirect('payment');
         }
     },
-    // viewEdit: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
+    viewEdit: async (req, res) => {
+        try {
+            const { id } = req.params;
 
-    //         let nominal = await NominalModel.findOne({ _id: id });
+            let payment = await PaymentModel.findOne({ _id: id }).populate('bank');
+            let bank = await BankModel.find();
 
-    //         res.render('admin/nominal/edit', { nominal });
-    //     } catch (error) {
-    //         req.flash('alertMessage', `${error.message}`);
-    //         req.flash('alertStatus', 'danger');
-    //         res.redirect('nominal');
-    //     }
-    // },
-    // actionEdit: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
-    //         const { coinName, coinQuantity, price } = req.body;
+            res.render('admin/payment/edit', { payment, bank });
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`);
+            req.flash('alertStatus', 'danger');
+            res.redirect('payment');
+        }
+    },
+    actionEdit: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { bank, type } = req.body;
 
-    //         await NominalModel.findOneAndUpdate({ _id: id }, { coinName, coinQuantity, price });
+            await PaymentModel.findOneAndUpdate({ _id: id }, { bank, type });
 
-    //         req.flash('alertMessage', "Berhasil ubah data");
-    //         req.flash('alertStatus', "success");
+            req.flash('alertMessage', "Berhasil ubah data");
+            req.flash('alertStatus', "success");
 
-    //         res.redirect('/nominal');
-    //     } catch (error) {
-    //         req.flash('alertMessage', `${error.message}`);
-    //         req.flash('alertStatus', 'danger');
-    //         res.redirect('nominal');
-    //     }
-    // },
+            res.redirect('/payment');
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`);
+            req.flash('alertStatus', 'danger');
+            res.redirect('payment');
+        }
+    },
+    actionStatus: async (req, res) => {
+        try {
+            const { id } = req.params;
+            let payment = await PaymentModel.findOne({ _id: id });
+
+            let status = payment.status === 'Y' ? 'N' : 'Y';
+
+            payment = await PaymentModel.findOneAndUpdate({ _id: id }, { status });
+
+            req.flash('alertMessage', "Berhasil ubah status");
+            req.flash('alertStatus', "success");
+
+            res.redirect('/payment');
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`);
+            req.flash('alertStatus', 'danger');
+            res.redirect('payment');
+        }
+    }
     // actionDelete: async (req, res) => {
     //     try {
     //         const { id } = req.params;
