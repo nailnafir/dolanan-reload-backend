@@ -42,36 +42,36 @@ module.exports = {
             res.redirect('bank');
         }
     },
-    // viewEdit: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
+    viewEdit: async (req, res) => {
+        try {
+            const { id } = req.params;
 
-    //         let nominal = await NominalModel.findOne({ _id: id });
+            let bank = await BankModel.findOne({ _id: id });
 
-    //         res.render('admin/nominal/edit', { nominal });
-    //     } catch (error) {
-    //         req.flash('alertMessage', `${error.message}`);
-    //         req.flash('alertStatus', 'danger');
-    //         res.redirect('nominal');
-    //     }
-    // },
-    // actionEdit: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
-    //         const { coinName, coinQuantity, price } = req.body;
+            res.render('admin/bank/edit', { bank });
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`);
+            req.flash('alertStatus', 'danger');
+            res.redirect('bank');
+        }
+    },
+    actionEdit: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { name, bankName, accountNumber } = req.body;
 
-    //         await NominalModel.findOneAndUpdate({ _id: id }, { coinName, coinQuantity, price });
+            await BankModel.findOneAndUpdate({ _id: id }, { name, bankName, accountNumber });
 
-    //         req.flash('alertMessage', "Berhasil ubah data");
-    //         req.flash('alertStatus', "success");
+            req.flash('alertMessage', "Berhasil ubah data");
+            req.flash('alertStatus', "success");
 
-    //         res.redirect('/nominal');
-    //     } catch (error) {
-    //         req.flash('alertMessage', `${error.message}`);
-    //         req.flash('alertStatus', 'danger');
-    //         res.redirect('nominal');
-    //     }
-    // },
+            res.redirect('/bank');
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`);
+            req.flash('alertStatus', 'danger');
+            res.redirect('bank');
+        }
+    },
     // actionDelete: async (req, res) => {
     //     try {
     //         const { id } = req.params;
