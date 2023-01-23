@@ -1,0 +1,60 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th class="col-1">Nomor</th>
+      <th class="col-2">Tipe Pembayaran</th>
+      <th class="col-4">Bank</th>
+      <th class="col-1">Status</th>
+      <th class="col-4">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let i = 0; i < payment.length; i++) { %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= payment[i].type %></td>
+      <td>
+        <% payment[i].bank.forEach(banks => { %>
+        <span class="badge badge-warning">
+          <%= banks.name %> - <%= banks.bankName %> - <%= banks.accountNumber %>
+        </span>
+        <% }) %>
+      </td>
+      <td>
+        <% if (payment[i].status === 'Y') { %>
+        <span class="badge badge-success"> Aktif </span>
+        <% } else { %>
+        <span class="badge badge-danger"> Tidak Aktif </span>
+        <% } %>
+      </td>
+      <td>
+        <form
+          action="/payment/status/<%= payment[i]._id %>?_method=PUT"
+          method="POST"
+          class="d-inline-block"
+        >
+          <button class="btn btn-primary">
+            <i class="fas fa-power-off mr-2"></i>
+            <% if (payment[i].status === 'Y') { %> Matikan <% } else { %>
+            Hidupkan <% } %>
+          </button>
+        </form>
+        <a href="/payment/edit/<%= payment[i]._id %>" class="btn btn-warning">
+          <i class="fas fa-pencil-alt mr-2"></i>
+          Ubah
+        </a>
+        <form
+          action="/payment/delete/<%= payment[i]._id %>?_method=DELETE"
+          method="POST"
+          class="d-inline-block"
+        >
+          <button class="btn btn-danger">
+            <i class="fas fa-trash mr-2"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
