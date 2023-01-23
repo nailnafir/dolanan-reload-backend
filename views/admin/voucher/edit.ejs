@@ -15,7 +15,7 @@
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/">Beranda</a></li>
             <li class="breadcrumb-item"><a href="/voucher">Voucher</a></li>
-            <li class="breadcrumb-item active">Tambah</li>
+            <li class="breadcrumb-item active">Ubah</li>
           </ol>
         </div>
       </div>
@@ -31,11 +31,11 @@
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Form Tambah Voucher</h3>
+              <h3 class="card-title">Form Ubah Voucher</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="/voucher/create" method="POST" enctype="multipart/form-data">
+            <form action="/voucher/edit/<%= voucher._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="form-group">
                   <label for="name">Masukkan Nama Game</label>
@@ -44,6 +44,7 @@
                     class="form-control"
                     id="name"
                     name="name"
+                    value="<%= voucher.name %>"
                     placeholder="Masukkan Nama Game"
                   />
                 </div>
@@ -58,8 +59,12 @@
                     <option disabled selected="selected">
                       --- Pilih Kategori ---
                     </option>
-                    <% category.forEach(category => { %>
-                    <option value="<%= category._id %>">
+                      <% category.forEach(category => { %>
+                      <option value="<%= category._id %>" 
+                      <% if (category._id.toString() === voucher?.category?._id.toString()) { %> 
+                        selected
+                      <% } %>
+                      >
                       <%= category.name %>
                     </option>
                     <% }) %>
@@ -77,7 +82,13 @@
                       required
                     >
                       <% nominal.forEach(nominal => { %>
-                      <option value="<%= nominal._id %>">
+                      <option value="<%= nominal._id %>"
+                          <% voucher.nominal.forEach(voucherNominal => { %>
+                            <% if (nominal._id.toString() === voucherNominal._id.toString()) { %>
+                                selected
+                            <% } %>
+                          <% }) %>
+                        >
                         <%= nominal.coinQuantity %> <%= nominal.coinName %>
                       </option>
                       <% }) %>
@@ -92,10 +103,9 @@
                     id="image"
                     name="image"
                     placeholder="Masukkan Gambar"
-                    required
                   />
                   <br>
-                  <img src="" id="preview" width="10%" height="10%">
+                  <img src="../../../public/uploads/<%= voucher.thumbnail %>" alt="preview" id="preview" width="10%" height="10%">
                 </div>
               </div>
               <!-- /.card-body -->
