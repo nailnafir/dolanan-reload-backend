@@ -9,13 +9,12 @@ module.exports = {
 
             const alert = { message: alertMessage, status: alertStatus };
             let payment = await PaymentModel.find().populate('bank');
-            console.log(payment);
 
             res.render('admin/payment/view_payment', { payment, alert });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     },
     viewCreate: async (req, res) => {
@@ -25,7 +24,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     },
     actionCreate: async (req, res) => {
@@ -42,7 +41,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     },
     viewEdit: async (req, res) => {
@@ -56,7 +55,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     },
     actionEdit: async (req, res) => {
@@ -73,7 +72,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     },
     actionStatus: async (req, res) => {
@@ -92,7 +91,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     },
     actionDelete: async (req, res) => {
@@ -108,7 +107,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('payment');
+            res.redirect('/payment');
         }
     }
 }

@@ -13,7 +13,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('nominal');
+            res.redirect('/nominal');
         }
     },
     viewCreate: async (req, res) => {
@@ -22,7 +22,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('nominal');
+            res.redirect('/nominal');
         }
     },
     actionCreate: async (req, res) => {
@@ -39,7 +39,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('nominal');
+            res.redirect('/nominal');
         }
     },
     viewEdit: async (req, res) => {
@@ -52,7 +52,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('nominal');
+            res.redirect('/nominal');
         }
     },
     actionEdit: async (req, res) => {
@@ -69,7 +69,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('nominal');
+            res.redirect('/nominal');
         }
     },
     actionDelete: async (req, res) => {
@@ -85,7 +85,7 @@ module.exports = {
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
-            res.redirect('nominal');
+            res.redirect('/nominal');
         }
     }
 }
