@@ -12,7 +12,7 @@ module.exports = {
             const alertStatus = req.flash('alertStatus');
 
             const alert = { message: alertMessage, status: alertStatus };
-            let voucher = await VoucherModel.find();
+            let voucher = await VoucherModel.find().populate('category').populate('nominal');
 
             res.render('admin/voucher/view_voucher', { voucher, alert });
         } catch (error) {

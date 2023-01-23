@@ -39,6 +39,8 @@ app.use('/category', categoryRouter);
 app.use('/nominal', nominalRouter);
 app.use('/voucher', voucherRouter);
 
+app.use('/public/uploads/', express.static('./public/uploads'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
