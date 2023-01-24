@@ -38,18 +38,18 @@
         }).format(transaction[i].totalValue) %>
       </td>
       <td>
-        <% if (transaction[i].status === 'pending') { %>
-        <span class="badge badge-warning"><%= transaction[i].status %></span>
-        <% } else if (transaction[i].status === 'success') { %>
+        <% if (transaction[i].status === 'Berhasil') { %>
         <span class="badge badge-success"><%= transaction[i].status %></span>
-        <% } else { %>
+        <% } else if (transaction[i].status === 'Gagal') { %>
         <span class="badge badge-danger"><%= transaction[i].status %></span>
+        <% } else { %>
+        <span class="badge badge-warning"><%= transaction[i].status %></span>
         <% } %>
       </td>
       <td><%= transaction[i]?.player?.name ?? '-' %></td>
       <td>
         <form
-          action="/transaction/status/<%= transaction[i]._id %>?_method=PUT"
+          action="/transaction/status/<%= transaction[i]._id %>?status=Berhasil&_method=PUT"
           method="POST"
           class="d-inline-block"
         >
@@ -59,13 +59,13 @@
           </button>
         </form>
         <form
-          action="/transaction/status/<%= transaction[i]._id %>?_method=PUT"
+          action="/transaction/status/<%= transaction[i]._id %>?status=Gagal&_method=PUT"
           method="POST"
           class="d-inline-block"
         >
           <button class="btn btn-danger">
             <i class="fas fa-times-circle mr-2"></i>
-            Hapus
+            Tolak
           </button>
         </form>
       </td>
