@@ -1,0 +1,75 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th class="col-1">Nomor</th>
+      <th class="col-3">Nama Game</th>
+      <th class="col-1">Item</th>
+      <th class="col-1">Total Harga</th>
+      <th class="col-1">Status</th>
+      <th class="col-2">Nama Player</th>
+      <th class="col-3">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let i = 0; i < transaction.length; i++) { %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td>
+        <div class="d-flex">
+          <img
+            src="../../../public/uploads/<%= transaction[i]?.historyVoucherTopUp?.thumbnail %>"
+            width="50px"
+            height="70px"
+            alt="preview"
+          />
+          <div class="ml-3">
+            <%= transaction[i]?.historyVoucherTopUp?.gameName %>
+            <br />
+            <%= transaction[i]?.historyVoucherTopUp?.category %>
+          </div>
+        </div>
+      </td>
+      <td>
+        <%= transaction[i]?.historyVoucherTopUp?.coinQuantity %> <%=
+        transaction[i]?.historyVoucherTopUp?.coinName %>
+      </td>
+      <td>
+        <%= new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR'
+        }).format(transaction[i].totalValue) %>
+      </td>
+      <td>
+        <% if (transaction[i].status === 'pending') { %>
+        <span class="badge badge-warning"><%= transaction[i].status %></span>
+        <% } else if (transaction[i].status === 'success') { %>
+        <span class="badge badge-success"><%= transaction[i].status %></span>
+        <% } else { %>
+        <span class="badge badge-danger"><%= transaction[i].status %></span>
+        <% } %>
+      </td>
+      <td><%= transaction[i]?.player?.name ?? '-' %></td>
+      <td>
+        <form
+          action="/transaction/status/<%= transaction[i]._id %>?_method=PUT"
+          method="POST"
+          class="d-inline-block"
+        >
+          <button class="btn btn-success">
+            <i class="fas fa-check-circle mr-2"></i>
+            Terima
+          </button>
+        </form>
+        <form
+          action="/transaction/status/<%= transaction[i]._id %>?_method=PUT"
+          method="POST"
+          class="d-inline-block"
+        >
+          <button class="btn btn-danger">
+            <i class="fas fa-times-circle mr-2"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
