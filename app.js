@@ -13,6 +13,7 @@ var nominalRouter = require('./app/nominal/router');
 var voucherRouter = require('./app/voucher/router');
 var bankRouter = require('./app/bank/router');
 var paymentRouter = require('./app/payment/router');
+var userRouter = require('./app/user/router');
 
 var app = express();
 
@@ -36,7 +37,8 @@ app.use(session({
   cookie: {  }
 }))
 
-app.use('/', dashboardRouter);
+app.use('/', userRouter);
+app.use('/dashboard', dashboardRouter);
 app.use('/category', categoryRouter);
 app.use('/nominal', nominalRouter);
 app.use('/voucher', voucherRouter);
