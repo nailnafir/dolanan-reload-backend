@@ -14,7 +14,12 @@ module.exports = {
             const alert = { message: alertMessage, status: alertStatus };
             let voucher = await VoucherModel.find().populate('category').populate('nominal');
 
-            res.render('admin/voucher/view_voucher', { voucher, alert });
+            res.render('admin/voucher/view_voucher', {
+                voucher, 
+                alert, 
+                name: req.session.user.name,
+                title: 'Halaman Voucher'
+            });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
@@ -25,7 +30,12 @@ module.exports = {
         try {
             let category = await CategoryModel.find();
             let nominal = await NominalModel.find();
-            res.render('admin/voucher/create', { category, nominal });
+            res.render('admin/voucher/create', { 
+                category, 
+                nominal,
+                name: req.session.user.name,
+                title: 'Halaman Tambah Voucher'
+            });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
@@ -85,7 +95,13 @@ module.exports = {
 
             let voucher = await VoucherModel.findOne({ _id: id }).populate('category').populate('nominal');
 
-            res.render('admin/voucher/edit', { voucher, category, nominal });
+            res.render('admin/voucher/edit', { 
+                voucher, 
+                category, 
+                nominal,
+                name: req.session.user.name,
+                title: 'Halaman Ubah Voucher'
+            });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');

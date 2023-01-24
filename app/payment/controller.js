@@ -10,7 +10,12 @@ module.exports = {
             const alert = { message: alertMessage, status: alertStatus };
             let payment = await PaymentModel.find().populate('bank');
 
-            res.render('admin/payment/view_payment', { payment, alert });
+            res.render('admin/payment/view_payment', { 
+                payment, 
+                alert,
+                name: req.session.user.name,
+                title: 'Halaman Jenis Pembayaran',
+            });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
@@ -20,7 +25,11 @@ module.exports = {
     viewCreate: async (req, res) => {
         try {
             let bank = await BankModel.find();
-            res.render('admin/payment/create', { bank });
+            res.render('admin/payment/create', { 
+                bank,
+                name: req.session.user.name,
+                title: 'Halaman Tambah Jenis Pembayaran',
+            });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
@@ -51,7 +60,12 @@ module.exports = {
             let payment = await PaymentModel.findOne({ _id: id }).populate('bank');
             let bank = await BankModel.find();
 
-            res.render('admin/payment/edit', { payment, bank });
+            res.render('admin/payment/edit', { 
+                payment, 
+                bank,
+                name: req.session.user.name,
+                title: 'Halaman Ubah Jenis Pembayaran',
+            });
         } catch (error) {
             req.flash('alertMessage', `${error.message}`);
             req.flash('alertStatus', 'danger');
