@@ -48,6 +48,7 @@
       </td>
       <td><%= transaction[i]?.player?.name ?? '-' %></td>
       <td>
+        <% if (transaction[i]?.status === 'Tertunda') { %>
         <form
           action="/transaction/status/<%= transaction[i]._id %>?status=Berhasil&_method=PUT"
           method="POST"
@@ -68,6 +69,9 @@
             Tolak
           </button>
         </form>
+        <% } else { %>
+        <div><i>Sudah Ditindaklanjuti</i></div>
+        <% } %>
       </td>
     </tr>
     <% } %>
