@@ -15,8 +15,10 @@ var bankRouter = require('./app/bank/router');
 var paymentRouter = require('./app/payment/router');
 var userRouter = require('./app/user/router');
 var transactionRouter = require('./app/transaction/router');
+var playerRouter = require('./app/player/router');
 
 var app = express();
+var URL = '/api/v1';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +48,9 @@ app.use('/voucher', voucherRouter);
 app.use('/bank', bankRouter);
 app.use('/payment', paymentRouter);
 app.use('/transaction', transactionRouter);
+
+// api
+app.use(`${URL}/players`, playerRouter);
 
 app.use('/public/uploads/', express.static('./public/uploads'));
 
