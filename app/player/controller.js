@@ -133,5 +133,17 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
         }
+    },
+    historyDetail: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const history = await TransactionModel.findOne({ _id: id });
+
+            if (!history) return res.status(404).json({ message: 'Riwayat transaksi tidak ditemukan' });
+            
+            res.status(200).json({ data: history });
+        } catch (error) {
+            res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
+        }
     }
 }
