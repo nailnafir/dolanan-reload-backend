@@ -96,5 +96,42 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
         }
+    },
+    history: async (req, res) => {
+        try {
+            const { status = '' } = req.query;
+
+            let criteria = {};
+
+            if (status.length) {
+                criteria = {
+                    ...criteria,
+                    status: { $regex: `${status}`, $options: 'i' }
+                }
+            }
+
+            if (req.player._id) {
+                criteria = {
+                    ...criteria,
+                    player: req.player._id
+                }
+            }
+
+            const history = await TransactionModel.find(criteria);
+
+            let total = await TransactionModel.aggregate([
+                { $match: criteria },
+                {
+                    $group: {
+                        _id: null,
+                        value: { $sum: "$value" }
+                    }
+                }
+            ]);
+
+            res.status(200).json({ data: history, total: total.length ? total[0].value : 0 });
+        } catch (error) {
+            res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
+        }
     }
 }
