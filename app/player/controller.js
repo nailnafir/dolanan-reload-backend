@@ -124,12 +124,12 @@ module.exports = {
                 {
                     $group: {
                         _id: null,
-                        value: { $sum: "$value" }
+                        totalValue: { $sum: "$totalValue" }
                     }
                 }
             ]);
 
-            res.status(200).json({ data: history, total: total.length ? total[0].value : 0 });
+            res.status(200).json({ data: history, total: total.length ? total[0].totalValue : 0 });
         } catch (error) {
             res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
         }
