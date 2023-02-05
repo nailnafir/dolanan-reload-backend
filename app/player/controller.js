@@ -176,5 +176,20 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
         }
+    },
+    profile: async (req, res) => {
+        try {
+            const player = {
+                id: req.player._id,
+                username: req.player.username,
+                email: req.player.email,
+                name: req.player.name,
+                avatar: req.player.avatar,
+                phoneNumber: req.player.phoneNumber,
+            }
+            res.status(200).json({ data: player })
+        } catch (error) {
+            res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
+        }
     }
 }
