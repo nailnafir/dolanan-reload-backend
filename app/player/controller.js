@@ -140,8 +140,39 @@ module.exports = {
             const history = await TransactionModel.findOne({ _id: id });
 
             if (!history) return res.status(404).json({ message: 'Riwayat transaksi tidak ditemukan' });
-            
+
             res.status(200).json({ data: history });
+        } catch (error) {
+            res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
+        }
+    },
+    dashboard: async (req, res) => {
+        try {
+            const count = await TransactionModel.aggregate([
+                { $match: { player: req.player._id } },
+                {
+                    $group: {
+                        _id: '$category',
+                        value: { $sum: '$value' }
+                    },
+                }
+            ]);
+
+            const category = await CategoryModel.find({});
+
+            category.forEach(element => {
+                count.forEach(data => {
+                    if (data._id.toString() === element._id.toString()) {
+                        data.name = element.name;
+                    }
+                });
+            });
+
+            const history = await TransactionModel.find({ player: req.player._id })
+                .populate('category')
+                .sort({ 'updatedAt': -1 });
+
+            res.status(200).json({ data: history, count: count });
         } catch (error) {
             res.status(500).json({ message: error.message || 'Terjadi Kesalahan Pada Server' });
         }
